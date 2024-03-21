@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "aws-bedrock-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Violet Vivirand <purpleslovemail@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.32.2"
+boto3 = "^1.34.66"
+jsonpickle = "^3.0.3"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.22.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
