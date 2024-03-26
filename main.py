@@ -39,26 +39,28 @@ with st.sidebar:
         min_value=0.0,
         max_value=1.0,
         value=1.0,
-        help="The amount of randomness injected into the response.")
+        help="The amount of randomness injected into the response.",
+        )
     # Max tokens config input area
     max_tokens = st.number_input(
         label="Max Output Tokens",
         min_value=1,
         max_value=4096,
         value=1024,
-        help="The maximum number of tokens to generate before stopping. Visit [official document](https://docs.anthropic.com/claude/docs/models-overview) for more information.")
+        help="The maximum number of tokens to generate before stopping. Visit [official document](https://docs.anthropic.com/claude/docs/models-overview) for more information.",
+        )
     # Stop Sequences config input area
     stop_sequences = st.text_input(
         label="Stop Sequences",
         help="Custom text sequences that will cause the model to stop generating.",
-    )
+        )
     # Image uploader
     uploaded_files = st.file_uploader(
         label="Upload file (Multiple files allowed)", 
         type=['jpg', 'jpeg', 'png',],
         accept_multiple_files=True,
         help="???",  # [TODO]
-    )
+        )
 
     if uploaded_files is not None:
         rows = []
@@ -98,11 +100,11 @@ with st.sidebar:
             "mime_type": None,  # Hide MIME type
             "image_preview": st.column_config.ImageColumn(
                 "Preview Image", help="Streamlit app preview screenshots"
-            ),
+                ),
             "image_base64": None,  # Hide Base64 encoded image content
-        },
+            },
         key="df_editor",
-    )
+        )
 
 # Prompt Interface
 # Ref: https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps#build-a-bot-that-mirrors-your-input
@@ -140,7 +142,7 @@ if prompt := st.chat_input("User Prompt"):
                     "type": "base64", 
                     "media_type": st.session_state['df_files']['mime_type'][key_row],
                     "data": st.session_state['df_files']['image_base64'][key_row],
-                }})
+                    }})
 
         # Display user message in chat message container
         st.markdown(prompt)
@@ -172,7 +174,7 @@ if prompt := st.chat_input("User Prompt"):
         response = bedrock_runtime.invoke_model(
             modelId="anthropic.claude-3-sonnet-20240229-v1:0",
             body=json.dumps(payload),
-        )
+            )
         result = json.loads(response.get("body").read())
         output_list = result.get("content", [])
 
@@ -204,4 +206,4 @@ if prompt := st.chat_input("User Prompt"):
 
             st.write({
                 "messages": st.session_state["messages"],
-            })
+                })
