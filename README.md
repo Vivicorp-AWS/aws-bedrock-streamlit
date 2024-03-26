@@ -43,3 +43,7 @@ The AWS credential will assigned in the sidebar and stored as a Streamlit's Sess
 # E.g.: Create a S3 client
 s3 = st.session_state['aws_session'].client('s3')
 ```
+
+## Caveats
+
+### enableXsrfProtection=`false` (`config.toml`)
