@@ -7,7 +7,7 @@ import json
 
 # Page config should be placed at the top of the app
 st.set_page_config(
-    page_title='Amazon Bedrock Playground',
+    page_title='Amazon Bedrock Playground for Claude 3 Sonnet',
     page_icon=":speech_balloon:",
     layout="wide",
     initial_sidebar_state="auto",
@@ -25,7 +25,7 @@ with st.sidebar:
 
     # Model configs
     st.caption(body="Model Configuration")
-    st.write("Model: Claude 3 Sonnet")  # [TODO] Model Selection
+    # [TODO] Model Selection
 
     # System prompt input area
     prompt_system = st.text_area(
@@ -83,7 +83,8 @@ with st.sidebar:
                 "name": f"Image {str(row_index)}",  # Name in Prompt, default: Image 1, Image 2, ..., etc.
                 "mime_type": mime_type,  # MIME type
                 "image_preview": f"data:image/generic;base64,{base64_data}",
-                "image_base64": base64_data,})
+                "image_base64": base64_data,
+                })
             row_index += 1
     
     # Store image data rows
