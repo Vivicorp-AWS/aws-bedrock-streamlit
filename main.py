@@ -95,7 +95,8 @@ with st.sidebar:
         df_files,
         column_config={
             "_index": None,  # Hide index
-            "is_widget": "Attach this Image",
+            "is_widget": "Attach",
+            "name": "Name",
             # "name": st.column_config.TextColumn('Name in Prompt', required=True),  # [FEATURE REQUEST] Editable image name notation
             "mime_type": None,  # Hide MIME type
             "image_preview": st.column_config.ImageColumn(
@@ -103,6 +104,7 @@ with st.sidebar:
                 ),
             "image_base64": None,  # Hide Base64 encoded image content
             },
+        use_container_width=True,
         key="df_editor",
         )
 
