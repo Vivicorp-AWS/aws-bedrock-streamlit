@@ -15,7 +15,7 @@ st.set_page_config(
     )
 
 # App Inrerface
-st.title(body="Amazon Bedrock Playground")
+st.title(body="Amazon Bedrock Playground for Claude 3 Sonnet")
 
 # Display the sidebar
 with st.sidebar:
