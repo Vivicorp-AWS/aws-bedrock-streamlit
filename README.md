@@ -1,7 +1,5 @@
 # Streamlit Frontend for Amazon Bedrock
 
-| 🚧 Under heavy construction 🚧
-
 ## Usage
 
 ### Launch
