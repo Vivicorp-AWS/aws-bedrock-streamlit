@@ -19,6 +19,10 @@ st.title(body="Amazon Bedrock Playground for Claude 3 Sonnet")
 
 # Display the sidebar
 with st.sidebar:
+    if st.button("Reset Chat History", type="primary"):
+        st.session_state.messages = []
+        # st.experimental_rerun()
+
     # Credential configs
     st.caption(body="Credential Configuration")
     display_credential_widget()
