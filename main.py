@@ -37,13 +37,15 @@ with st.sidebar:
         options=(
             'Claude 3 Haiku',
             'Claude 3 Sonnet',
+            'Claude 3 Opus',
             ),
         index=1,
-        help="There a 3 model variants in the Claude 3 family: Haiku, Sonnet, and Opus (Not available yet). Visit the [official Blog Post](https://www.anthropic.com/news/claude-3-family) for more information."
+        help="There a 3 model variants in the Claude 3 family: Haiku, Sonnet, and Opus. Visit the [official Blog Post](https://www.anthropic.com/news/claude-3-family) for more information."
         )
     claude_3_model_hashmap = {
         'Claude 3 Haiku': 'anthropic.claude-3-haiku-20240307-v1:0',
         'Claude 3 Sonnet': 'anthropic.claude-3-sonnet-20240229-v1:0',
+        'Claude 3 Opus': 'anthropic.claude-3-opus-20240229-v1:0'
         }
     st.session_state['claude_3_model_id'] = claude_3_model_hashmap[claude_3_model_name]
     
