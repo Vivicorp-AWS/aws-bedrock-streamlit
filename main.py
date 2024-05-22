@@ -19,10 +19,10 @@ st.title(body="Amazon Bedrock Playground for Claude 3 Sonnet")
 
 # Display the sidebar
 with st.sidebar:
-    # # Reset Chat History button
-    # if st.button("Reset Chat History", type="primary"):
-    #     st.session_state.messages = []
-    #     # st.experimental_rerun()
+    # Reset Chat History button
+    if st.button("Reset Chat History", type="primary"):
+        st.session_state.messages = []
+        # st.experimental_rerun()
 
     # Credential configs
     st.caption(body="Credential Configuration")
@@ -30,7 +30,23 @@ with st.sidebar:
 
     # Model configs
     st.caption(body="Model Configuration")
-    # [TODO] Model Selection
+    
+    # Claude 3 Model Selection
+    claude_3_model_name = st.selectbox(
+        label='How would you like to be contacted?',
+        options=(
+            'Claude 3 Haiku',
+            'Claude 3 Sonnet',
+            ),
+        index=1,
+        help="There a 3 model variants in the Claude 3 family: Haiku, Sonnet, and Opus (Not available yet). Visit the [official Blog Post](https://www.anthropic.com/news/claude-3-family) for more information."
+        )
+    claude_3_model_hashmap = {
+        'Claude 3 Haiku': 'anthropic.claude-3-haiku-20240307-v1:0',
+        'Claude 3 Sonnet': 'anthropic.claude-3-sonnet-20240229-v1:0',
+        }
+    st.session_state['claude_3_model_id'] = claude_3_model_hashmap[claude_3_model_name]
+    
 
     # System prompt input area
     prompt_system = st.text_area(
@@ -114,11 +130,6 @@ with st.sidebar:
         key="df_editor",
         )
 
-# Create a function to reset the chat history.
-# This will be triggered by the clicking button at the end of Prompt Interface after everytime the prompt is sent
-def reset_chat_history():
-    st.session_state.messages = []
-
 # Prompt Interface
 # Ref: https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps#build-a-bot-that-mirrors-your-input
 # Initialize chat history
@@ -185,7 +196,7 @@ if prompt := st.chat_input("User Prompt"):
     result = None
     try:
         response = bedrock_runtime.invoke_model(
-            modelId="anthropic.claude-3-sonnet-20240229-v1:0",
+            modelId=st.session_state['claude_3_model_id'],
             body=json.dumps(payload),
             )
         result = json.loads(response.get("body").read())
@@ -201,16 +212,10 @@ if prompt := st.chat_input("User Prompt"):
         # Add assistant response to chat history
         st.session_state.messages.append(message_assistant)
     except Exception as err:
-        error_msg = f"Couldn't invoke Claude 3 Sonnet. Here's why: {err.response["Error"]["Code"]}: {err.response["Error"]["Message"]}"
+        error_msg = f"Couldn't invoke Bedrock Claude 3. Here's why: {err.response["Error"]["Code"]}: {err.response["Error"]["Message"]}"
         st.error(error_msg, icon="🚨",)
         print(error_msg)
         st.session_state.messages = []  # If error occurs, remove all messages from history
-    finally:
-        # Always shows a Reset Chat History button at the bottom of the chat interface
-        with st.chat_message("Reset Controller", avatar="🤖"):
-            # Reset Chat History button
-            st.button("Reset Chat History", type="primary", on_click=reset_chat_history)
-
     
     # Debug information
     if st.query_params.get('debug') == "true":
