@@ -19,10 +19,10 @@ st.title(body="Amazon Bedrock Playground for Claude 3 Sonnet")
 
 # Display the sidebar
 with st.sidebar:
-    # Reset Chat History button
-    if st.button("Reset Chat History", type="primary"):
-        st.session_state.messages = []
-        # st.experimental_rerun()
+    # # Reset Chat History button
+    # if st.button("Reset Chat History", type="primary"):
+    #     st.session_state.messages = []
+    #     # st.experimental_rerun()
 
     # Credential configs
     st.caption(body="Credential Configuration")
@@ -130,6 +130,11 @@ with st.sidebar:
         key="df_editor",
         )
 
+# Create a function to reset the chat history.
+# This will be triggered by the clicking button at the end of Prompt Interface after everytime the prompt is sent
+def reset_chat_history():
+    st.session_state.messages = []
+
 # Prompt Interface
 # Ref: https://docs.streamlit.io/knowledge-base/tutorials/build-conversational-apps#build-a-bot-that-mirrors-your-input
 # Initialize chat history
@@ -216,6 +221,12 @@ if prompt := st.chat_input("User Prompt"):
         st.error(error_msg, icon="🚨",)
         print(error_msg)
         st.session_state.messages = []  # If error occurs, remove all messages from history
+    finally:
+        # Always shows a Reset Chat History button at the bottom of the chat interface
+        with st.chat_message("Reset Controller", avatar="🤖"):
+            # Reset Chat History button
+            st.button("Reset Chat History", type="primary", on_click=reset_chat_history)
+
     
     # Debug information
     if st.query_params.get('debug') == "true":
